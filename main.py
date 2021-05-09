@@ -73,7 +73,7 @@ def get_abstract(tag: str):
 
     return firstParagraph
 
-@app.get('/mainText/{tag}')
+@app.get('/text/{tag}')
 def get_main_text(tag): 
     templateURL = "https://en.wikipedia.org/wiki/"
     url = templateURL + tag
