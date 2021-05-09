@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 import requests
 import re
+import uvicorn 
 
 # start fastapi
 app = FastAPI()
@@ -272,3 +273,6 @@ def get_categories(tag):
 # url = 'https://en.wikipedia.org/wiki/WWE'
 # url = 'https://en.wikipedia.org/wiki/Wally_Buhaj'
 # url = 'https://en.wikipedia.org/wiki/Lexus_IS_(XE20)'
+
+if __name__ == "__main__":
+    uvicorn.run(app, host='0.0.0.0')
