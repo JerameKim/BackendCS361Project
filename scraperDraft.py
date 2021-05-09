@@ -221,7 +221,6 @@ def get_photos(tag):
     #     print(f"Image caption: {finalImage.caption}")
     #     print(f"Image id: {finalImage.id}")
     return images_array
-A
 
 def main(): 
     # tag = 'Lexus_F'

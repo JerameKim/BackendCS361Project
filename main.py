@@ -9,7 +9,6 @@ import re
 # start fastapi
 app = FastAPI()
 
-db = []
 class Abstract(BaseModel): 
     text: str
 
