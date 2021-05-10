@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/jeramekim/Development/SoftwareEngineeringCS361/scraping/FastAPIScraper/env"
+VIRTUAL_ENV="/Users/jeramekim/Development/SoftwareEngineeringCS361Backend/env"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import requests
 import re
 import uvicorn 
+import wikipediaapi #not used for scraping, only for verification of page existance 
 
 # start fastapi
 app = FastAPI()
@@ -51,18 +52,23 @@ class my_category(object):
         self.link = link 
         self.text = text
 
-
 # endpoints 
 # get request 
 # fastAPI will automatically expect something that is an "abstract" to be in the body of the request
 @app.get('/abstract/{tag}')
 def get_abstract(tag: str): 
+    wiki = wikipediaapi.Wikipedia("en")
+
     templateURL = "https://en.wikipedia.org/wiki/"
     url = templateURL + tag
     html = requests.get(url) 
     html_text = "none"
     if(html.status_code==200): 
-        html_text = requests.get(url).text
+        if(wiki.page(url)): 
+            html_text = requests.get(url).text
+        else: 
+            return "Page does not exist"
+        
     else: 
         print(f"Failed get request from webpage with code {html.status_code}")
         return "Could not reach Wikipedia page.  Either the page does not exist or Wikipedia is currently unreachable."
@@ -88,12 +94,16 @@ def get_abstract(tag: str):
 
 @app.get('/text/{tag}')
 def get_main_text(tag): 
+    wiki = wikipediaapi.Wikipedia("en")
     templateURL = "https://en.wikipedia.org/wiki/"
     url = templateURL + tag
     html = requests.get(url) 
     html_text = "none"
     if(html.status_code==200): 
-        html_text = requests.get(url).text
+        if(wiki.page(url)): 
+            html_text = requests.get(url).text
+        else: 
+            return "Page does not exist"
     else: 
         print(f"Failed get request from webpage with code {html.status_code}")
         return "Could not reach Wikipedia page.  Either the page does not exist or Wikipedia is currently unreachable."
@@ -122,12 +132,17 @@ def get_main_text(tag):
 @app.get('/citations/{tag}')
 # gets the citations in a citaitons array obj
 def get_citations(tag): 
+    wiki = wikipediaapi.Wikipedia("en")
+
     templateURL = "https://en.wikipedia.org/wiki/"
     url = templateURL + tag
     html = requests.get(url) 
     html_text = "none"
     if(html.status_code==200): 
-        html_text = requests.get(url).text
+        if(wiki.page(url)): 
+            html_text = requests.get(url).text
+        else: 
+            return "Page does not exist"
     else: 
         print(f"Failed get request from webpage with code {html.status_code}")
         return "Could not reach Wikipedia page.  Either the page does not exist or Wikipedia is currently unreachable."
@@ -184,12 +199,16 @@ def get_citations(tag):
 @app.get('/photos/{tag}')
 # gets the links and the citations to the photos
 def get_photos(tag):
+    wiki = wikipediaapi.Wikipedia("en")
     templateURL = "https://en.wikipedia.org/wiki/"
     url = templateURL + tag
     html = requests.get(url) 
     html_text = "none"
     if(html.status_code==200): 
-        html_text = requests.get(url).text
+        if(wiki.page(url)): 
+            html_text = requests.get(url).text
+        else: 
+            return "Page does not exist"
     else: 
         print(f"Failed get request from webpage with code {html.status_code}")
         return "Could not reach Wikipedia page.  Either the page does not exist or Wikipedia is currently unreachable."
@@ -250,12 +269,16 @@ def get_photos(tag):
 @app.get('/categories/{tag}')
 # gets the related categories
 def get_categories(tag):
+    wiki = wikipediaapi.Wikipedia("en")
     templateURL = "https://en.wikipedia.org/wiki/"
     url = templateURL + tag
     html = requests.get(url) 
     html_text = "none"
     if(html.status_code==200): 
-        html_text = requests.get(url).text
+        if(wiki.page(url)): 
+            html_text = requests.get(url).text
+        else: 
+            return "Page does not exist"
     else: 
         print(f"Failed get request from webpage with code {html.status_code}")
         return "Could not reach Wikipedia page.  Either the page does not exist or Wikipedia is currently unreachable."
@@ -270,7 +293,7 @@ def get_categories(tag):
         empty_category_obj= my_category("", "")
         categories_array.append(empty_category_obj)
 
-    # get title for each category 
+    # get title for each category
     text_idx = 0
     for category in categories_wrapper.find_all('li'):
         categories_array[text_idx].text = category.get_text()
