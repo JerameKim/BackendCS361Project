@@ -65,7 +65,8 @@ def get_abstract(tag: str):
         html_text = requests.get(url).text
     else: 
         print(f"Failed get request from webpage with code {html.status_code}")
-        exit(0)
+        return "Could not reach Wikipedia page.  Either the page does not exist or Wikipedia is currently unreachable."
+        # exit(0)
 
     # format the text in lxml format 
     soup = BeautifulSoup(html_text, "lxml")
@@ -95,7 +96,8 @@ def get_main_text(tag):
         html_text = requests.get(url).text
     else: 
         print(f"Failed get request from webpage with code {html.status_code}")
-        exit(0)
+        return "Could not reach Wikipedia page.  Either the page does not exist or Wikipedia is currently unreachable."
+        # exit(0)
     
     # format the text in lxml format 
     soup = BeautifulSoup(html_text, "lxml")
@@ -128,7 +130,8 @@ def get_citations(tag):
         html_text = requests.get(url).text
     else: 
         print(f"Failed get request from webpage with code {html.status_code}")
-        exit(0)
+        return "Could not reach Wikipedia page.  Either the page does not exist or Wikipedia is currently unreachable."
+        # exit(0)
     
     # format the text in lxml format 
     soup = BeautifulSoup(html_text, "lxml")
@@ -189,7 +192,8 @@ def get_photos(tag):
         html_text = requests.get(url).text
     else: 
         print(f"Failed get request from webpage with code {html.status_code}")
-        exit(0)
+        return "Could not reach Wikipedia page.  Either the page does not exist or Wikipedia is currently unreachable."
+        # exit(0)
     
     # format the text in lxml format 
     soup = BeautifulSoup(html_text, "lxml")
@@ -254,7 +258,8 @@ def get_categories(tag):
         html_text = requests.get(url).text
     else: 
         print(f"Failed get request from webpage with code {html.status_code}")
-        exit(0)
+        return "Could not reach Wikipedia page.  Either the page does not exist or Wikipedia is currently unreachable."
+        # exit(0)
     
     # format the text in lxml format 
     soup = BeautifulSoup(html_text, "lxml")
