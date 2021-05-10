@@ -3,10 +3,10 @@ from bs4 import BeautifulSoup
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 
+import wikipediaapi as wa #not used for scarping, 
 import requests
 import re
 import uvicorn 
-import wikipediaapi #not used for scraping, only for verification of page existance 
 
 # start fastapi
 app = FastAPI()
@@ -57,19 +57,17 @@ class my_category(object):
 # fastAPI will automatically expect something that is an "abstract" to be in the body of the request
 @app.get('/abstract/{tag}')
 def get_abstract(tag: str): 
-    wiki = wikipediaapi.Wikipedia("en")
+    wiki = wa.Wikipedia("en")
 
     templateURL = "https://en.wikipedia.org/wiki/"
     url = templateURL + tag
     html = requests.get(url) 
     html_text = "none"
     if(html.status_code==200): 
-        # if(wiki.page(url)): 
-        html_text = requests.get(url).text
-        #     print("Page does exist")
-        #     return "Page does exist"
-        # else: 
-        #     return "Page does not exist"
+        if(wiki.page(url)): 
+            html_text = requests.get(url).text
+        else: 
+            return "Page does not exist"
         
     else: 
         print(f"Failed get request from webpage with code {html.status_code}")
@@ -96,16 +94,13 @@ def get_abstract(tag: str):
 
 @app.get('/text/{tag}')
 def get_main_text(tag): 
-    wiki = wikipediaapi.Wikipedia("en")
     templateURL = "https://en.wikipedia.org/wiki/"
     url = templateURL + tag
     html = requests.get(url) 
     html_text = "none"
     if(html.status_code==200): 
-        if(wiki.page(url)): 
-            html_text = requests.get(url).text
-        else: 
-            return "Page does not exist"
+        html_text = requests.get(url).text
+
     else: 
         print(f"Failed get request from webpage with code {html.status_code}")
         return "Could not reach Wikipedia page.  Either the page does not exist or Wikipedia is currently unreachable."
@@ -134,17 +129,12 @@ def get_main_text(tag):
 @app.get('/citations/{tag}')
 # gets the citations in a citaitons array obj
 def get_citations(tag): 
-    wiki = wikipediaapi.Wikipedia("en")
-
     templateURL = "https://en.wikipedia.org/wiki/"
     url = templateURL + tag
     html = requests.get(url) 
     html_text = "none"
     if(html.status_code==200): 
-        if(wiki.page(url)): 
-            html_text = requests.get(url).text
-        else: 
-            return "Page does not exist"
+        html_text = requests.get(url).text
     else: 
         print(f"Failed get request from webpage with code {html.status_code}")
         return "Could not reach Wikipedia page.  Either the page does not exist or Wikipedia is currently unreachable."
@@ -201,16 +191,13 @@ def get_citations(tag):
 @app.get('/photos/{tag}')
 # gets the links and the citations to the photos
 def get_photos(tag):
-    wiki = wikipediaapi.Wikipedia("en")
     templateURL = "https://en.wikipedia.org/wiki/"
     url = templateURL + tag
     html = requests.get(url) 
     html_text = "none"
     if(html.status_code==200): 
-        if(wiki.page(url)): 
-            html_text = requests.get(url).text
-        else: 
-            return "Page does not exist"
+        html_text = requests.get(url).text
+        
     else: 
         print(f"Failed get request from webpage with code {html.status_code}")
         return "Could not reach Wikipedia page.  Either the page does not exist or Wikipedia is currently unreachable."
@@ -271,16 +258,12 @@ def get_photos(tag):
 @app.get('/categories/{tag}')
 # gets the related categories
 def get_categories(tag):
-    wiki = wikipediaapi.Wikipedia("en")
     templateURL = "https://en.wikipedia.org/wiki/"
     url = templateURL + tag
     html = requests.get(url) 
     html_text = "none"
     if(html.status_code==200): 
-        if(wiki.page(url)): 
-            html_text = requests.get(url).text
-        else: 
-            return "Page does not exist"
+        html_text = requests.get(url).text
     else: 
         print(f"Failed get request from webpage with code {html.status_code}")
         return "Could not reach Wikipedia page.  Either the page does not exist or Wikipedia is currently unreachable."
