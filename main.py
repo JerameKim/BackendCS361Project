@@ -81,7 +81,7 @@ def get_abstract(tag: str):
 
     for i in range(3): 
         # get the first paragraph tag that has content, this is usually the abstract
-        if(len(paragraphs[i]) > 1): 
+        if(len(paragraphs[i]) > 100): 
             firstParagraph = paragraphs[i].get_text()
             break
 
@@ -95,7 +95,6 @@ def get_main_text(tag):
     html_text = "none"
     if(html.status_code==200): 
         html_text = requests.get(url).text
-
     else: 
         print(f"Failed get request from webpage with code {html.status_code}")
         return "Could not reach Wikipedia page.  Either the page does not exist or Wikipedia is currently unreachable."
