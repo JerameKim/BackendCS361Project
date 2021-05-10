@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 
-# import wikipediaapi as wa #not used for scraping, 
 import requests
 import re
 import uvicorn 
@@ -57,17 +56,13 @@ class my_category(object):
 # fastAPI will automatically expect something that is an "abstract" to be in the body of the request
 @app.get('/abstract/{tag}')
 def get_abstract(tag: str): 
-    wiki = wa.Wikipedia("en")
 
     templateURL = "https://en.wikipedia.org/wiki/"
     url = templateURL + tag
     html = requests.get(url) 
     html_text = "none"
     if(html.status_code==200): 
-        if(wiki.page(url)): 
-            html_text = requests.get(url).text
-        else: 
-            return "Page does not exist"
+        html_text = requests.get(url).text
         
     else: 
         print(f"Failed get request from webpage with code {html.status_code}")
