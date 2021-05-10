@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 
-import wikipediaapi as wa #not used for scarping, 
+import wikipediaapi as wa #not used for scraping, 
 import requests
 import re
 import uvicorn 
