@@ -81,7 +81,7 @@ def get_abstract(tag: str):
 
     for i in range(3): 
         # get the first paragraph tag that has content, this is usually the abstract
-        if(len(paragraphs[i]) > 103): 
+        if(len(paragraphs[i]) > 108): 
             firstParagraph = paragraphs[i].get_text()
             break
 
