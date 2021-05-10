@@ -64,10 +64,12 @@ def get_abstract(tag: str):
     html = requests.get(url) 
     html_text = "none"
     if(html.status_code==200): 
-        if(wiki.page(url)): 
-            html_text = requests.get(url).text
-        else: 
-            return "Page does not exist"
+        # if(wiki.page(url)): 
+        html_text = requests.get(url).text
+        #     print("Page does exist")
+        #     return "Page does exist"
+        # else: 
+        #     return "Page does not exist"
         
     else: 
         print(f"Failed get request from webpage with code {html.status_code}")
