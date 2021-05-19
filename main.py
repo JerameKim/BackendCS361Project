@@ -125,11 +125,12 @@ def get_main_text(tag):
         paragraphs.remove("")
 
     # main_text = f"{paragraphs}"
-    main_text = ""
-    for paragraph in paragraphs: 
-        main_text = main_text + " " + paragraph
+    # main_text = ""
+    # for paragraph in paragraphs: 
+    #     main_text = main_text + " " + paragraph
 
-    return main_text
+    # return main_text
+    return paragraphs
 
 @app.get('/citations/{tag}')
 # gets the citations in a citaitons array obj

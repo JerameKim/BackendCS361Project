@@ -81,21 +81,18 @@ def get_main_text(tag):
         paragraphs[i] = paragraphs[i].get_text()
         # removes brackets and their contents 
         paragraphs[i] = re.sub(pattern, '', paragraphs[i])
-    
-        # remove newline char
-        paragraphs[i] = paragraphs[i].rstrip()
+        
+    # remove any empty lines
     while("" in paragraphs):
         paragraphs.remove("")
 
-    # for paragraph in paragraphs: 
-    #     print(paragraph)
-    main_text = ""
-    for paragraph in paragraphs: 
-        main_text += paragraph
-    print(main_text)
-
     # main_text = f"{paragraphs}"
-    return main_text
+    # main_text = ""
+    # for paragraph in paragraphs: 
+    #     main_text = main_text + " " + paragraph
+    # print(main_text)
+    print(paragraphs)
+    return paragraphs
 
 # gets the citations in a citaitons array obj
 def get_citations(tag): 
