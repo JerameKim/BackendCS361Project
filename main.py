@@ -119,7 +119,7 @@ def get_main_text(tag):
         paragraphs[i] = re.sub(pattern, '', paragraphs[i])
         
         # remove newline char
-        paragraphs[i] = paragraphs[i].rstrip()
+        paragraphs[i] = paragraphs[i].rstrip("\n")
     # remove any empty lines
     while("" in paragraphs):
         paragraphs.remove("")
@@ -127,8 +127,8 @@ def get_main_text(tag):
     # main_text = f"{paragraphs}"
     main_text = ""
     for paragraph in paragraphs: 
-        main_text += paragraph
-        
+        main_text = main_text + " " + paragraph
+
     return main_text
 
 @app.get('/citations/{tag}')
