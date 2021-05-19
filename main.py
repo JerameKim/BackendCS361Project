@@ -118,8 +118,10 @@ def get_main_text(tag):
         # removes brackets and their contents 
         paragraphs[i] = re.sub(pattern, '', paragraphs[i])
         
-    for line in paragraphs: 
-        print(line)
+        # remove newline char
+        paragraphs[i] = paragraphs[i].rstrip("\n")
+
+        
 
     main_text = f"{paragraphs}"
     return main_text
