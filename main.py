@@ -119,7 +119,7 @@ def get_main_text(tag):
         paragraphs[i] = re.sub(pattern, '', paragraphs[i])
         
         # remove newline char
-        paragraphs[i] = paragraphs[i].rstrip("\n")
+        # paragraphs[i] = paragraphs[i].rstrip("\n")
     # remove any empty lines
     while("" in paragraphs):
         paragraphs.remove("")
