@@ -117,14 +117,8 @@ def get_main_text(tag):
         paragraphs[i] = paragraphs[i].get_text()
         # removes brackets and their contents 
         paragraphs[i] = re.sub(pattern, '', paragraphs[i])
-    
-    new_paragraphs = []
-    # remove newline chars 
-    for i in range(len(paragraphs)): 
-        new_paragraphs[i].append(paragraphs[i].strip())
-    
 
-    main_text = f"{new_paragraphs}"
+    main_text = f"{paragraphs}"
     return main_text
 
 @app.get('/citations/{tag}')
