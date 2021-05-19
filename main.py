@@ -124,7 +124,11 @@ def get_main_text(tag):
     while("" in paragraphs):
         paragraphs.remove("")
 
-    main_text = f"{paragraphs}"
+    # main_text = f"{paragraphs}"
+    main_text = ""
+    for paragraph in paragraphs: 
+        main_text += paragraph
+        
     return main_text
 
 @app.get('/citations/{tag}')

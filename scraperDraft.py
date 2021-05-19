@@ -87,11 +87,14 @@ def get_main_text(tag):
     while("" in paragraphs):
         paragraphs.remove("")
 
+    # for paragraph in paragraphs: 
+    #     print(paragraph)
+    main_text = ""
     for paragraph in paragraphs: 
-        print(paragraph)
+        main_text += paragraph
+    print(main_text)
 
-
-    main_text = f"{paragraphs}"
+    # main_text = f"{paragraphs}"
     return main_text
 
 # gets the citations in a citaitons array obj
