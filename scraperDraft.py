@@ -81,7 +81,14 @@ def get_main_text(tag):
         paragraphs[i] = paragraphs[i].get_text()
         # removes brackets and their contents 
         paragraphs[i] = re.sub(pattern, '', paragraphs[i])
-        # print(paragraphs[i])
+    
+        # remove newline char
+        paragraphs[i] = paragraphs[i].rstrip("\n")
+
+    for paragraph in paragraphs: 
+        print(paragraph)
+
+
     main_text = f"{paragraphs}"
     return main_text
 
@@ -226,10 +233,11 @@ def main():
     # tag = 'Lexus_F'
     # tag = 'WWE'
     # tag = 'Wally_Buhaj'
-    tag = 'Lexus_IS_(XE20)'
+    # tag = 'Lexus_IS_(XE20)'
+    tag = 'Modern_family'
 
     # abstract = get_abstract(tag)
-    # main_text = get_main_text(tag)
+    main_text = get_main_text(tag)
     # citations = get_citations(tag)
     # pictures = get_photos(tag)
     # categories = get_categories(tag)
