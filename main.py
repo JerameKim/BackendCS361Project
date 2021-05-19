@@ -120,8 +120,9 @@ def get_main_text(tag):
         
         # remove newline char
         paragraphs[i] = paragraphs[i].rstrip()
-
-        
+    # remove any empty lines
+    while("" in paragraphs):
+        paragraphs.remove("")
 
     main_text = f"{paragraphs}"
     return main_text
