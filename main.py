@@ -258,7 +258,21 @@ def get_photos(tag):
             img_src = "https:" + img_src
             images_array[image_src_idx].src = img_src
             image_src_idx += 1
-    return images_array
+
+    final_images_array = []
+
+    # remove image instances with no source
+    for finalImage in images_array: 
+        if len(finalImage.src) == 0:
+            continue
+        final_images_array.append(finalImage)
+
+    # for finalImage in final_images_array: 
+    #     print(f"Image source: {finalImage.src}")
+    #     print(f"Image caption: {finalImage.caption}")
+    #     print(f"Image id: {finalImage.id}")
+
+    return final_images_array
 
 
 @app.get('/categories/{tag}')

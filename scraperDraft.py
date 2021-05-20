@@ -179,6 +179,7 @@ def get_photos(tag):
         empty_img_obj = my_image("", "", 0)
         images_array.append(empty_img_obj)
 
+
     # get infobox image first(if it exists)
     if(soup.find_all("td", class_="infobox-image")): 
         # text caption 
@@ -211,7 +212,7 @@ def get_photos(tag):
 
     # find and populate the image caption 
     other_images = soup.find_all("div", class_="thumb")
-    for image in other_images: 
+    for image in other_images:
         image_caption = image.get_text()
         images_array[image_text_idx].caption = image_caption
         image_text_idx += 1
@@ -225,11 +226,18 @@ def get_photos(tag):
             images_array[image_src_idx].src = img_src
             image_src_idx += 1
 
-    # for finalImage in images_array: 
-    #     print(f"Image source: {finalImage.src}")
-    #     print(f"Image caption: {finalImage.caption}")
-    #     print(f"Image id: {finalImage.id}")
-    return images_array
+    final_images_array = []
+    for finalImage in images_array: 
+        if len(finalImage.src) == 0:
+            continue
+        final_images_array.append(finalImage)
+
+
+    for finalImage in final_images_array: 
+        print(f"Image source: {finalImage.src}")
+        print(f"Image caption: {finalImage.caption}")
+        print(f"Image id: {finalImage.id}")
+    return final_images_array
 
 def main(): 
     # tag = 'Lexus_F'
@@ -239,9 +247,9 @@ def main():
     tag = 'Modern_family'
 
     # abstract = get_abstract(tag)
-    main_text = get_main_text(tag)
+    # main_text = get_main_text(tag)
     # citations = get_citations(tag)
-    # pictures = get_photos(tag)
+    pictures = get_photos(tag)
     # categories = get_categories(tag)
 
 if __name__ == "__main__": 
