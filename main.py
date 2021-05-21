@@ -65,6 +65,7 @@ def get_abstract(lang: str, tag: str):
         templateURL = "https://it.wikipedia.org/wiki/"
     if(lang == "es"): 
         templateURL = "https://es.wikipedia.org/wiki/"
+        return "Found SpanisH"
     if(lang == "ru"): 
         templateURL = "https://ru.wikipedia.org/wiki/"
     else: 
