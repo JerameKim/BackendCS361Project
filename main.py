@@ -57,10 +57,10 @@ class my_category(object):
 @app.get('/abstract/{lang}/{tag}')
 def get_abstract(lang: str, tag: str): 
 
-    templateURL = "https://fr.wikipedia.org/wiki/"
+    templateURL = "https://en.wikipedia.org/wiki/"
 
-    # if(lang == "fr"): 
-    #     templateURL = "https://en.wikipedia.org/wiki/"
+    if(lang == "fr"): 
+        templateURL = "https://fr.wikipedia.org/wiki/"
     if(lang == "it"): 
         templateURL = "https://it.wikipedia.org/wiki/"
     # else: 
