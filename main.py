@@ -230,8 +230,7 @@ def get_citations(lang: str, tag: str):
         return citation_obj_array
     except: 
         empty_citation = my_citation("", "No available citation data", -3)
-        citation_obj_array = []
-        citation_obj_array.append(my_citation)
+        citation_obj_array = [empty_citation]
         return citation_obj_array
 
 
