@@ -63,8 +63,8 @@ def get_abstract(lang: str, tag: str):
         templateURL = "https://fr.wikipedia.org/wiki/"
     if(lang == "it"): 
         templateURL = "https://it.wikipedia.org/wiki/"
-    # else: 
-    #     templateURL = "https://en.wikipedia.org/wiki/"
+    else: 
+        templateURL = "https://en.wikipedia.org/wiki/"
 
     url = templateURL + tag
     html = requests.get(url) 
