@@ -54,11 +54,18 @@ class my_category(object):
 # endpoints 
 # get request 
 # fastAPI will automatically expect something that is an "abstract" to be in the body of the request
-@app.get('/abstract/{tag}')
-def get_abstract(tag: str): 
+@app.get('/abstract/{lang}/{tag}')
+def get_abstract(lang: str, tag: str): 
 
     # templateURL = "https://en.wikipedia.org/wiki/"
-    templateURL= "https://fr.wikipedia.org/wiki/"
+    # templateURL= "https://fr.wikipedia.org/wiki/"
+    if(lang == "fr"): 
+        templateURL = "https://fr.wikipedia.org/wiki/"
+    if(lang == "it"): 
+        templateURL = "https://it.wikipedia.org/wiki/"
+    else: 
+        templateURL = "https://en.wikipedia.org/wiki/"
+
     url = templateURL + tag
     html = requests.get(url) 
     html_text = "none"
@@ -280,7 +287,6 @@ def get_photos(tag):
     #     print(f"Image id: {finalImage.id}")
 
     return final_images_array
-
 
 @app.get('/categories/{tag}')
 # gets the related categories
