@@ -57,7 +57,8 @@ class my_category(object):
 @app.get('/abstract/{tag}')
 def get_abstract(tag: str): 
 
-    templateURL = "https://en.wikipedia.org/wiki/"
+    # templateURL = "https://en.wikipedia.org/wiki/"
+    templateURL= "https://fr.wikipedia.org/wiki/"
     url = templateURL + tag
     html = requests.get(url) 
     html_text = "none"
