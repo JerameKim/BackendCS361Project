@@ -98,10 +98,20 @@ def get_abstract(lang: str, tag: str):
 
     return firstParagraph
 
-@app.get('/text/{tag}')
-def get_main_text(tag): 
+@app.get('/text/{lang}/{tag}')
+def get_main_text(lang: str, tag: str): 
+
     templateURL = "https://en.wikipedia.org/wiki/"
-    # templateURL= "https://fr.wikipedia.org/wiki/"
+    
+    # Defaults to english if no language specified
+    if(lang == "fr"): 
+        templateURL = "https://fr.wikipedia.org/wiki/"
+    if(lang == "it"): 
+        templateURL = "https://it.wikipedia.org/wiki/"
+    if(lang == "es"): 
+        templateURL = "https://es.wikipedia.org/wiki/"
+    if(lang == "ru"): 
+        templateURL = "https://ru.wikipedia.org/wiki/"
 
     url = templateURL + tag
     html = requests.get(url) 
@@ -145,11 +155,21 @@ def get_main_text(tag):
     # return main_text
     return paragraphs
 
-@app.get('/citations/{tag}')
+@app.get('/citations/{lang}/{tag}')
 # gets the citations in a citaitons array obj
-def get_citations(tag): 
+def get_citations(lang: str, tag: str): 
+
     templateURL = "https://en.wikipedia.org/wiki/"
-    # templateURL= "https://fr.wikipedia.org/wiki/"
+    
+    # Defaults to english if no language specified
+    if(lang == "fr"): 
+        templateURL = "https://fr.wikipedia.org/wiki/"
+    if(lang == "it"): 
+        templateURL = "https://it.wikipedia.org/wiki/"
+    if(lang == "es"): 
+        templateURL = "https://es.wikipedia.org/wiki/"
+    if(lang == "ru"): 
+        templateURL = "https://ru.wikipedia.org/wiki/"
 
     url = templateURL + tag
     html = requests.get(url) 
@@ -209,9 +229,9 @@ def get_citations(tag):
     return citation_obj_array
 
 
-@app.get('/photos/{tag}')
+@app.get('/photos/{lang}/{tag}')
 # gets the links and the citations to the photos
-def get_photos(tag):
+def get_photos(lang: str, tag: str):
     templateURL = "https://en.wikipedia.org/wiki/"
     # templateURL= "https://fr.wikipedia.org/wiki/"
 
@@ -291,11 +311,21 @@ def get_photos(tag):
 
     return final_images_array
 
-@app.get('/categories/{tag}')
+@app.get('/categories/{lang}/{tag}')
 # gets the related categories
-def get_categories(tag):
+def get_categories(lang: str, tag: str):
+
     templateURL = "https://en.wikipedia.org/wiki/"
-    # templateURL= "https://fr.wikipedia.org/wiki/"
+    
+    # Defaults to english if no language specified
+    if(lang == "fr"): 
+        templateURL = "https://fr.wikipedia.org/wiki/"
+    if(lang == "it"): 
+        templateURL = "https://it.wikipedia.org/wiki/"
+    if(lang == "es"): 
+        templateURL = "https://es.wikipedia.org/wiki/"
+    if(lang == "ru"): 
+        templateURL = "https://ru.wikipedia.org/wiki/"
 
     url = templateURL + tag
     html = requests.get(url) 
