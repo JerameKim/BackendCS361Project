@@ -96,7 +96,7 @@ def get_main_text(tag):
 
 # gets the citations in a citaitons array obj
 def get_citations(tag): 
-    templateURL = "https://en.wikipedia.org/wiki/"
+    templateURL = "https://es.wikipedia.org/wiki/"
     url = templateURL + tag
     html = requests.get(url) 
     html_text = "none"
@@ -109,49 +109,54 @@ def get_citations(tag):
     # format the text in lxml format 
     soup = BeautifulSoup(html_text, "lxml")
 
-    # gets all text content from citations
-    content = soup.find('ol', class_ ='references')
-    idx = 1
+    try: 
+            
+        # gets all text content from citations
+        content = soup.find('ol', class_ ='references')
+        idx = 1
 
-    citations = content.find_all('li')
-    citation_obj_array = []
-    citation_num = 1
+        citations = content.find_all('li')
+        citation_obj_array = []
+        citation_num = 1
 
-    # creates array of objects
-    for single_citation in citations: 
-        empty_citation = my_citation("", "", citation_num)
-        citation_num+=1
-        citation_obj_array.append(empty_citation)
+        # creates array of objects
+        for single_citation in citations: 
+            empty_citation = my_citation("", "", citation_num)
+            citation_num+=1
+            citation_obj_array.append(empty_citation)
 
-    single_counter = 0
-    # grabs the relevant text 
-    for single_citation in citations: 
-        citation_text = single_citation.get_text()
-        # ignore first 2 chars and remove \n
-        citation_text = citation_text[2:].rstrip()
-        # populate object
-        citation_obj_array[single_counter].text= citation_text
-        # print(citation_obj_array[single_counter].text)
-        single_counter += 1
+        single_counter = 0
+        # grabs the relevant text 
+        for single_citation in citations: 
+            citation_text = single_citation.get_text()
+            # ignore first 2 chars and remove \n
+            citation_text = citation_text[2:].rstrip()
+            # populate object
+            citation_obj_array[single_counter].text= citation_text
+            # print(citation_obj_array[single_counter].text)
+            single_counter += 1
 
 
-    link_counter = 0
-    # if it exists, grabs the link associated to text 
-    reference_wrapper = soup.find_all('span', class_="reference-text")
-    for single_citation in reference_wrapper: 
-        # if it has a link, add it 
-        if single_citation.find_all('a', href=True):
-        # if single_citation.find('cite'):
-            for a in single_citation.find_all('a', href=True): 
-                # print(a['href'])
-                citation_obj_array[link_counter].link = a['href']
+        link_counter = 0
+        # if it exists, grabs the link associated to text 
+        reference_wrapper = soup.find_all('span', class_="reference-text")
+        for single_citation in reference_wrapper: 
+            # if it has a link, add it 
+            if single_citation.find_all('a', href=True):
+            # if single_citation.find('cite'):
+                for a in single_citation.find_all('a', href=True): 
+                    # print(a['href'])
+                    citation_obj_array[link_counter].link = a['href']
+                    link_counter +=1
+                    break
+            else: 
                 link_counter +=1
-                break
-        else: 
-            link_counter +=1
-            continue
+                continue
 
-    return citation_obj_array
+        return citation_obj_array
+    except: 
+        citation_obj_array = ["No available citation data"]
+        return citation_obj_array
     # for cit_obj in citation_obj_array: 
     #     print(f"Text: {cit_obj.text}")
     #     print(f"Link: {cit_obj.link}")
@@ -244,12 +249,13 @@ def main():
     # tag = 'WWE'
     # tag = 'Wally_Buhaj'
     # tag = 'Lexus_IS_(XE20)'
-    tag = 'Modern_family'
+    # tag = 'Modern_family'
+    tag = "Jimmy_Buffett"
 
     # abstract = get_abstract(tag)
     # main_text = get_main_text(tag)
-    # citations = get_citations(tag)
-    pictures = get_photos(tag)
+    citations = get_citations(tag)
+    # pictures = get_photos(tag)
     # categories = get_categories(tag)
 
 if __name__ == "__main__": 
