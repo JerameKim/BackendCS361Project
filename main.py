@@ -184,49 +184,53 @@ def get_citations(lang: str, tag: str):
     # format the text in lxml format 
     soup = BeautifulSoup(html_text, "lxml")
 
-    # gets all text content from citations
-    content = soup.find('ol', class_ ='references')
-    idx = 1
+    try: 
+        # gets all text content from citations
+        content = soup.find('ol', class_ ='references')
+        idx = 1
 
-    citations = content.find_all('li')
-    citation_obj_array = []
-    citation_num = 1
+        citations = content.find_all('li')
+        citation_obj_array = []
+        citation_num = 1
 
-    # creates array of objects
-    for single_citation in citations: 
-        empty_citation = my_citation("", "", citation_num)
-        citation_num+=1
-        citation_obj_array.append(empty_citation)
+        # creates array of objects
+        for single_citation in citations: 
+            empty_citation = my_citation("", "", citation_num)
+            citation_num+=1
+            citation_obj_array.append(empty_citation)
 
-    single_counter = 0
-    # grabs the relevant text 
-    for single_citation in citations: 
-        citation_text = single_citation.get_text()
-        # ignore first 2 chars and remove \n
-        citation_text = citation_text[2:].rstrip()
-        # populate object
-        citation_obj_array[single_counter].text= citation_text
-        # print(citation_obj_array[single_counter].text)
-        single_counter += 1
+        single_counter = 0
+        # grabs the relevant text 
+        for single_citation in citations: 
+            citation_text = single_citation.get_text()
+            # ignore first 2 chars and remove \n
+            citation_text = citation_text[2:].rstrip()
+            # populate object
+            citation_obj_array[single_counter].text= citation_text
+            # print(citation_obj_array[single_counter].text)
+            single_counter += 1
 
 
-    link_counter = 0
-    # if it exists, grabs the link associated to text 
-    reference_wrapper = soup.find_all('span', class_="reference-text")
-    for single_citation in reference_wrapper: 
-        # if it has a link, add it 
-        if single_citation.find_all('a', href=True):
-        # if single_citation.find('cite'):
-            for a in single_citation.find_all('a', href=True): 
-                # print(a['href'])
-                citation_obj_array[link_counter].link = a['href']
+        link_counter = 0
+        # if it exists, grabs the link associated to text 
+        reference_wrapper = soup.find_all('span', class_="reference-text")
+        for single_citation in reference_wrapper: 
+            # if it has a link, add it 
+            if single_citation.find_all('a', href=True):
+            # if single_citation.find('cite'):
+                for a in single_citation.find_all('a', href=True): 
+                    # print(a['href'])
+                    citation_obj_array[link_counter].link = a['href']
+                    link_counter +=1
+                    break
+            else: 
                 link_counter +=1
-                break
-        else: 
-            link_counter +=1
-            continue
+                continue
 
-    return citation_obj_array
+        return citation_obj_array
+    except: 
+        citation_obj_array = ["No available citation data"]
+        return citation_obj_array
 
 
 @app.get('/photos/{lang}/{tag}')
