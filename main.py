@@ -90,7 +90,9 @@ def get_abstract(tag: str):
 
 @app.get('/text/{tag}')
 def get_main_text(tag): 
-    templateURL = "https://en.wikipedia.org/wiki/"
+    # templateURL = "https://en.wikipedia.org/wiki/"
+    templateURL= "https://fr.wikipedia.org/wiki/"
+
     url = templateURL + tag
     html = requests.get(url) 
     html_text = "none"
@@ -136,7 +138,9 @@ def get_main_text(tag):
 @app.get('/citations/{tag}')
 # gets the citations in a citaitons array obj
 def get_citations(tag): 
-    templateURL = "https://en.wikipedia.org/wiki/"
+    # templateURL = "https://en.wikipedia.org/wiki/"
+    templateURL= "https://fr.wikipedia.org/wiki/"
+
     url = templateURL + tag
     html = requests.get(url) 
     html_text = "none"
@@ -198,7 +202,9 @@ def get_citations(tag):
 @app.get('/photos/{tag}')
 # gets the links and the citations to the photos
 def get_photos(tag):
-    templateURL = "https://en.wikipedia.org/wiki/"
+    # templateURL = "https://en.wikipedia.org/wiki/"
+    templateURL= "https://fr.wikipedia.org/wiki/"
+
     url = templateURL + tag
     html = requests.get(url) 
     html_text = "none"
@@ -279,7 +285,9 @@ def get_photos(tag):
 @app.get('/categories/{tag}')
 # gets the related categories
 def get_categories(tag):
-    templateURL = "https://en.wikipedia.org/wiki/"
+    # templateURL = "https://en.wikipedia.org/wiki/"
+    templateURL= "https://fr.wikipedia.org/wiki/"
+
     url = templateURL + tag
     html = requests.get(url) 
     html_text = "none"
