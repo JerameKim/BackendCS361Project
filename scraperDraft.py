@@ -289,9 +289,12 @@ def get_chapters(lang: str, tag: str):
             chapterLink = languageURL + tag + "#" + chapter
             chapterObject = my_chapter(chapterLink, chapter)
             finalArray.append(chapterObject)
+            print(chapterObject.link)
+            print(chapterObject.text)
         return finalArray
     except: 
-        return []
+        empty_chapter = my_chapter("", "No chapters data")
+        return  [empty_chapter]
 
 def main(): 
     # tag = 'Lexus_F'

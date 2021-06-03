@@ -432,7 +432,8 @@ def get_chapters(lang: str, tag: str):
             finalArray.append(chapterObject)
         return finalArray
     except: 
-        return []
+        empty_chapter = my_chapter("", "No chapters data")
+        return  [empty_chapter]
 
 
 # url = 'https://en.wikipedia.org/wiki/Lexus_F'
