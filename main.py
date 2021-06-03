@@ -32,7 +32,7 @@ class my_citation(object):
     def __init__(self, link, text, id):
         self.link = link
         # gives all the text of the citation, stuff in quotes is the linked portion 
-        # if nothing in quotes, whole thing is linked
+        # if nothing in quotes, whole thing is linkeo
         self.text = text
         self.id = id
 class my_image(object): 
@@ -57,19 +57,19 @@ class my_category(object):
 @app.get('/abstract/{lang}/{tag}')
 def get_abstract(lang: str, tag: str): 
 
-    templateURL = "https://en.wikipedia.org/wiki/"
+    languageURL = "https://en.wikipedia.org/wiki/"
     
     # Defaults to english if no language specified
     if(lang == "fr"): 
-        templateURL = "https://fr.wikipedia.org/wiki/"
+        languageURL = "https://fr.wikipedia.org/wiki/"
     if(lang == "it"): 
-        templateURL = "https://it.wikipedia.org/wiki/"
+        languageURL = "https://it.wikipedia.org/wiki/"
     if(lang == "es"): 
-        templateURL = "https://es.wikipedia.org/wiki/"
+        languageURL = "https://es.wikipedia.org/wiki/"
     if(lang == "ru"): 
-        templateURL = "https://ru.wikipedia.org/wiki/"
+        languageURL = "https://ru.wikipedia.org/wiki/"
 
-    url = templateURL + tag
+    url = languageURL + tag
     html = requests.get(url) 
     html_text = "none"
     if(html.status_code==200): 
@@ -90,7 +90,6 @@ def get_abstract(lang: str, tag: str):
         # gets all top level 'p' tags, which holds all the text
         paragraphs = content.find_all('p', recursive=False)
         
-
         for i in range(3): 
             # get the first paragraph tag that has content, this is usually the abstract
             if(len(paragraphs[i]) > 1): 
@@ -105,19 +104,19 @@ def get_abstract(lang: str, tag: str):
 @app.get('/text/{lang}/{tag}')
 def get_main_text(lang: str, tag: str): 
 
-    templateURL = "https://en.wikipedia.org/wiki/"
+    languageURL = "https://en.wikipedia.org/wiki/"
     
     # Defaults to english if no language specified
     if(lang == "fr"): 
-        templateURL = "https://fr.wikipedia.org/wiki/"
+        languageURL = "https://fr.wikipedia.org/wiki/"
     if(lang == "it"): 
-        templateURL = "https://it.wikipedia.org/wiki/"
+        languageURL = "https://it.wikipedia.org/wiki/"
     if(lang == "es"): 
-        templateURL = "https://es.wikipedia.org/wiki/"
+        languageURL = "https://es.wikipedia.org/wiki/"
     if(lang == "ru"): 
-        templateURL = "https://ru.wikipedia.org/wiki/"
+        languageURL = "https://ru.wikipedia.org/wiki/"
 
-    url = templateURL + tag
+    url = languageURL + tag
     html = requests.get(url) 
     html_text = "none"
     if(html.status_code==200): 
@@ -160,19 +159,19 @@ def get_main_text(lang: str, tag: str):
 # gets the citations in a citaitons array obj
 def get_citations(lang: str, tag: str): 
 
-    templateURL = "https://en.wikipedia.org/wiki/"
+    languageURL = "https://en.wikipedia.org/wiki/"
     
     # Defaults to english if no language specified
     if(lang == "fr"): 
-        templateURL = "https://fr.wikipedia.org/wiki/"
+        languageURL = "https://fr.wikipedia.org/wiki/"
     if(lang == "it"): 
-        templateURL = "https://it.wikipedia.org/wiki/"
+        languageURL = "https://it.wikipedia.org/wiki/"
     if(lang == "es"): 
-        templateURL = "https://es.wikipedia.org/wiki/"
+        languageURL = "https://es.wikipedia.org/wiki/"
     if(lang == "ru"): 
-        templateURL = "https://ru.wikipedia.org/wiki/"
+        languageURL = "https://ru.wikipedia.org/wiki/"
 
-    url = templateURL + tag
+    url = languageURL + tag
     html = requests.get(url) 
     html_text = "none"
     if(html.status_code==200): 
@@ -238,10 +237,18 @@ def get_citations(lang: str, tag: str):
 @app.get('/photos/{lang}/{tag}')
 # gets the links and the citations to the photos
 def get_photos(lang: str, tag: str):
-    templateURL = "https://en.wikipedia.org/wiki/"
-    # templateURL= "https://fr.wikipedia.org/wiki/"
+    languageURL = "https://en.wikipedia.org/wiki/"
+    # Defaults to english if no language specified
+    if(lang == "fr"): 
+        languageURL = "https://fr.wikipedia.org/wiki/"
+    if(lang == "it"): 
+        languageURL = "https://it.wikipedia.org/wiki/"
+    if(lang == "es"): 
+        languageURL = "https://es.wikipedia.org/wiki/"
+    if(lang == "ru"): 
+        languageURL = "https://ru.wikipedia.org/wiki/"
 
-    url = templateURL + tag
+    url = languageURL + tag
     html = requests.get(url) 
     html_text = "none"
     if(html.status_code==200): 
@@ -324,19 +331,19 @@ def get_photos(lang: str, tag: str):
 # gets the related categories
 def get_categories(lang: str, tag: str):
 
-    templateURL = "https://en.wikipedia.org/wiki/"
+    languageURL = "https://en.wikipedia.org/wiki/"
     
     # Defaults to english if no language specified
     if(lang == "fr"): 
-        templateURL = "https://fr.wikipedia.org/wiki/"
+        languageURL = "https://fr.wikipedia.org/wiki/"
     if(lang == "it"): 
-        templateURL = "https://it.wikipedia.org/wiki/"
+        languageURL = "https://it.wikipedia.org/wiki/"
     if(lang == "es"): 
-        templateURL = "https://es.wikipedia.org/wiki/"
+        languageURL = "https://es.wikipedia.org/wiki/"
     if(lang == "ru"): 
-        templateURL = "https://ru.wikipedia.org/wiki/"
+        languageURL = "https://ru.wikipedia.org/wiki/"
 
-    url = templateURL + tag
+    url = languageURL + tag
     html = requests.get(url) 
     html_text = "none"
     if(html.status_code==200): 
@@ -346,7 +353,7 @@ def get_categories(lang: str, tag: str):
         return "Could not reach Wikipedia page.  Either the page does not exist or Wikipedia is currently unreachable."
         # exit(0)
     
-    # format the text in lxml format 
+    # format the categories raw html in lxml format 
     soup = BeautifulSoup(html_text, "lxml")
     try: 
         categories_wrapper = soup.find("div", class_="mw-normal-catlinks")
@@ -374,6 +381,48 @@ def get_categories(lang: str, tag: str):
     except: 
         empty_category = my_category("", "No categories data")
         return  [empty_category]
+
+@app.get('/chapters/{lang}/{tag}')
+# gets each chapter in the article
+def get_chapters(lang: str, tag: str):
+    languageURL = "https://en.wikipedia.org/wiki/"
+
+    # Defaults to english if no language specified
+    if(lang == "fr"): 
+        languageURL = "https://fr.wikipedia.org/wiki/"
+    if(lang == "it"): 
+        languageURL = "https://it.wikipedia.org/wiki/"
+    if(lang == "es"): 
+        languageURL = "https://es.wikipedia.org/wiki/"
+    if(lang == "ru"): 
+        languageURL = "https://ru.wikipedia.org/wiki/"
+
+    url = languageURL + tag
+    html = requests.get(url) 
+    html_text = "none"
+    if(html.status_code==200): 
+        html_text = requests.get(url).text
+    else: 
+        print(f"Failed get request from webpage with code {html.status_code}")
+        exit(0)
+
+    # format the text in lxml format 
+    soup = BeautifulSoup(html_text, "lxml")
+
+    try: 
+        # gets all text content from page
+        content = soup.find('div', class_ ='toc')
+        myList = content.find('ul')
+        myTags = myList.find_all('a')
+
+        chaptersArray = []
+        # all the chapters are here, extract the content in href
+        for chapter in myTags: 
+            chaptersArray.append(chapter['href'])
+        return chaptersArray
+    except: 
+        return []
+
 
 # url = 'https://en.wikipedia.org/wiki/Lexus_F'
 # url = 'https://en.wikipedia.org/wiki/WWE'

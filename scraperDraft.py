@@ -41,7 +41,6 @@ def get_abstract(tag):
 
     # gets all top level 'p' tags, which holds all the text
     paragraphs = content.find_all('p', recursive=False)
-    
 
     for i in range(3): 
         # get the first paragraph tag that has content, this is usually the abstract
@@ -70,7 +69,6 @@ def get_main_text(tag):
     content = soup.find('div', class_ ='mw-parser-output')
 
     # gets all top level 'p' tags, which holds all the text
-    # paragraphs = content.find_all('p', recursive=False)
     paragraphs = content.find_all('p')
 
 
@@ -163,7 +161,6 @@ def get_citations(tag):
     #     print(f"Id: {cit_obj.id}")
     #     print()
 
-# gets the links and the citations to the photos
 def get_photos(tag):
     templateURL = "https://en.wikipedia.org/wiki/"
     url = templateURL + tag
@@ -244,19 +241,86 @@ def get_photos(tag):
         print(f"Image id: {finalImage.id}")
     return final_images_array
 
+# def get_chapters(tag):
+#     # downloads article and gives response if it doens't work
+#     templateURL = "https://en.wikipedia.org/wiki/"
+#     url = templateURL + tag
+#     html = requests.get(url) 
+#     html_text = "none"
+#     if(html.status_code==200): 
+#         html_text = requests.get(url).text
+#     else: 
+#         print(f"Failed get request from webpage with code {html.status_code}")
+#         exit(0)
+
+#     # format the text in lxml format 
+#     soup = BeautifulSoup(html_text, "lxml")
+
+#     # gets all text content from page
+#     content = soup.find('div', class_ ='toc')
+#     myList = content.find('ul')
+#     myTags = myList.find_all('a')
+
+#     chaptersArray = []
+#     # all the chapters are here, extract the content in href
+#     for chapter in myTags: 
+#         chaptersArray.append(chapter['href'])
+
+#     return chaptersArray
+def get_chapters(lang: str, tag: str):
+    languageURL = "https://en.wikipedia.org/wiki/"
+
+    # Defaults to english if no language specified
+    if(lang == "fr"): 
+        languageURL = "https://fr.wikipedia.org/wiki/"
+    if(lang == "it"): 
+        languageURL = "https://it.wikipedia.org/wiki/"
+    if(lang == "es"): 
+        languageURL = "https://es.wikipedia.org/wiki/"
+    if(lang == "ru"): 
+        languageURL = "https://ru.wikipedia.org/wiki/"
+
+    url = languageURL + tag
+    html = requests.get(url) 
+    html_text = "none"
+    if(html.status_code==200): 
+        html_text = requests.get(url).text
+    else: 
+        print(f"Failed get request from webpage with code {html.status_code}")
+        exit(0)
+
+    # format the text in lxml format 
+    soup = BeautifulSoup(html_text, "lxml")
+
+    try: 
+        # gets all text content from page
+        content = soup.find('div', class_ ='toc')
+        myList = content.find('ul')
+        myTags = myList.find_all('a')
+
+        chaptersArray = []
+        # all the chapters are here, extract the content in href
+        for chapter in myTags: 
+            chaptersArray.append(chapter['href'])
+        return chaptersArray
+    except: 
+        return []
+
 def main(): 
     # tag = 'Lexus_F'
     # tag = 'WWE'
     # tag = 'Wally_Buhaj'
     # tag = 'Lexus_IS_(XE20)'
-    # tag = 'Modern_family'
-    tag = "Jimmy_Buffett"
+    tag = 'Modern_family'
+    # tag = "Jimmy_Buffett"
 
     # abstract = get_abstract(tag)
     # main_text = get_main_text(tag)
-    citations = get_citations(tag)
+    # citations = get_citations(tag)
     # pictures = get_photos(tag)
     # categories = get_categories(tag)
+    chapters = get_chapters('en', tag)
 
 if __name__ == "__main__": 
     main()
+# 
