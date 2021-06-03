@@ -50,7 +50,10 @@ class my_category(object):
     def __init__(self, link, text): 
         self.link = link 
         self.text = text
-
+class my_chapter(object): 
+    def __init__(self, link, text): 
+        self.link = link 
+        self.text = text
 # endpoints 
 # get request 
 # fastAPI will automatically expect something that is an "abstract" to be in the body of the request
@@ -374,7 +377,7 @@ def get_categories(lang: str, tag: str):
         for single_category in categories_wrapper.find_all('ul'): 
             for tag in single_category.find_all('a'): 
                 category_link = tag['href']
-                category_link = "https://en.wikipedia.org/" + category_link
+                category_link = languageURL + category_link
                 categories_array[link_idx].link = category_link
                 link_idx+=1    
         return categories_array
@@ -416,13 +419,18 @@ def get_chapters(lang: str, tag: str):
         myTags = myList.find_all('a')
 
         chaptersArray = []
+        finalArray = []
         # all the chapters are here, extract the content in href
         for chapter in myTags: 
             madeChapter = chapter['href']
             doneChapter = madeChapter[1:]
             chaptersArray.append(doneChapter)
 
-        return chaptersArray
+        for chapter in chaptersArray: 
+            chapterLink = languageURL + tag + "#" + chapter
+            chapterObject = my_chapter(chapterLink, chapter)
+            finalArray.append(chapterObject)
+        return finalArray
     except: 
         return []
 

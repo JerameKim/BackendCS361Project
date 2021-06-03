@@ -19,6 +19,10 @@ class my_category(object):
     def __init__(self, link, text): 
         self.link = link 
         self.text = text
+class my_chapter(object): 
+    def __init__(self, link, text): 
+        self.link = link 
+        self.text = text
 
 # gets first paragraph in article
 def get_abstract(tag): 
@@ -241,31 +245,6 @@ def get_photos(tag):
         print(f"Image id: {finalImage.id}")
     return final_images_array
 
-# def get_chapters(tag):
-#     # downloads article and gives response if it doens't work
-#     templateURL = "https://en.wikipedia.org/wiki/"
-#     url = templateURL + tag
-#     html = requests.get(url) 
-#     html_text = "none"
-#     if(html.status_code==200): 
-#         html_text = requests.get(url).text
-#     else: 
-#         print(f"Failed get request from webpage with code {html.status_code}")
-#         exit(0)
-
-#     # format the text in lxml format 
-#     soup = BeautifulSoup(html_text, "lxml")
-
-#     # gets all text content from page
-#     content = soup.find('div', class_ ='toc')
-#     myList = content.find('ul')
-#     myTags = myList.find_all('a')
-
-#     chaptersArray = []
-#     # all the chapters are here, extract the content in href
-#     for chapter in myTags: 
-#         chaptersArray.append(chapter['href'])
-
 #     return chaptersArray
 def get_chapters(lang: str, tag: str):
     languageURL = "https://en.wikipedia.org/wiki/"
@@ -299,12 +278,18 @@ def get_chapters(lang: str, tag: str):
         myTags = myList.find_all('a')
 
         chaptersArray = []
+        finalArray = []
         # all the chapters are here, extract the content in href
         for chapter in myTags: 
             madeChapter = chapter['href']
             doneChapter = madeChapter[1:]
             chaptersArray.append(doneChapter)
-        return chaptersArray
+
+        for chapter in chaptersArray: 
+            chapterLink = languageURL + tag + "#" + chapter
+            chapterObject = my_chapter(chapterLink, chapter)
+            finalArray.append(chapterObject)
+        return finalArray
     except: 
         return []
 
@@ -322,7 +307,6 @@ def main():
     # pictures = get_photos(tag)
     # categories = get_categories(tag)
     chapters = get_chapters('en', tag)
-    print(chapters)
 
 if __name__ == "__main__": 
     main()
