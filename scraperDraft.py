@@ -301,7 +301,9 @@ def get_chapters(lang: str, tag: str):
         chaptersArray = []
         # all the chapters are here, extract the content in href
         for chapter in myTags: 
-            chaptersArray.append(chapter['href'])
+            madeChapter = chapter['href']
+            doneChapter = madeChapter[1:]
+            chaptersArray.append(doneChapter)
         return chaptersArray
     except: 
         return []
@@ -320,7 +322,7 @@ def main():
     # pictures = get_photos(tag)
     # categories = get_categories(tag)
     chapters = get_chapters('en', tag)
+    print(chapters)
 
 if __name__ == "__main__": 
     main()
-# 

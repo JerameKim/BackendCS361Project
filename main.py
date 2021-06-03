@@ -418,7 +418,10 @@ def get_chapters(lang: str, tag: str):
         chaptersArray = []
         # all the chapters are here, extract the content in href
         for chapter in myTags: 
-            chaptersArray.append(chapter['href'])
+            madeChapter = chapter['href']
+            doneChapter = madeChapter[1:]
+            chaptersArray.append(doneChapter)
+
         return chaptersArray
     except: 
         return []
